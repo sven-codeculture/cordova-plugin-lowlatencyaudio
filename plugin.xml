@@ -81,6 +81,44 @@
                      target-dir="src/com/android/vending/expansion/zipfile" />
         <source-file src="src/android/zipfile/ZipResourceFile.java"
                      target-dir="src/com/android/vending/expansion/zipfile" />
+
+        <!-- Licencing Library -->
+        <source-file src="src/android/licensing/AESObfuscator.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/APKExpansionPolicy.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/DeviceLimiter.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/ILicenseResultListener.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/ILicensingService.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/LicenseChecker.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/LicenseCheckerCallback.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/LicenseValidator.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/NullDeviceLimiter.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/Obfuscator.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/Policy.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/PreferenceObfuscator.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/ResponseData.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/ServerManagedPolicy.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/StrictPolicy.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/ValidationException.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/util/Base64DecoderException.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
+        <source-file src="src/android/licensing/util/Base64.java"
+                     target-dir="src/com/google/android/vending/expansion/licensing" />
         
      </platform>
      
