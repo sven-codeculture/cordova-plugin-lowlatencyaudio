@@ -30,6 +30,56 @@
         <source-file src="src/android/LowLatencyAudio.java" target-dir="src/com/rjfun/cordova/plugin" />
         <source-file src="src/android/LowLatencyAudioAsset.java" target-dir="src/com/rjfun/cordova/plugin" />
         <source-file src="src/android/PolyphonicVoice.java" target-dir="src/com/rjfun/cordova/plugin" />
+
+        <!-- Downloader Library -->
+        <source-file src="src/android/downloader/Constants.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/DownloaderClientMarshaller.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/DownloaderServiceMarshaller.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/DownloadProgressInfo.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/Helpers.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/IDownloaderClient.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/IDownloaderService.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/IStub.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/SystemFacade.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/AndroidHttpClient.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/CustomIntentService.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/CustomNotificationFactory.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/DownloaderService.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/DownloadInfo.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/DownloadNotification.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/DownloadsDB.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/DownloadThread.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/HttpDateTime.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/V3CustomNotification.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+        <source-file src="src/android/downloader/impl/V14CustomNotification.java"
+                     target-dir="src/com/google/android/vending/expansion/downloader" />
+
+        <!-- APK Expansion Zip Library -->
+        <source-file src="src/android/zipfile/APEZProvider.java"
+                     target-dir="src/com/android/vending/expansion/zipfile" />
+        <source-file src="src/android/zipfile/APKExpansionSupport.java"
+                     target-dir="src/com/android/vending/expansion/zipfile" />
+        <source-file src="src/android/zipfile/ZipResourceFile.java"
+                     target-dir="src/com/android/vending/expansion/zipfile" />
         
      </platform>
      

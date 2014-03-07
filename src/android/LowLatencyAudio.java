@@ -107,7 +107,7 @@ public class LowLatencyAudio extends CordovaPlugin {
                 AssetFileDescriptor afd;
                 Context ctx = cordova.getActivity().getApplicationContext();
                 if(assetPath.startsWith("~/")) {
-                    afd = this.getExternalAssets(ctx, assetPath.substring(2))
+                    afd = this.getExternalAssets(ctx, assetPath.substring(2));
                 } else {
                     fullPath = "www/".concat(assetPath);
                     AssetManager am = ctx.getResources().getAssets();
