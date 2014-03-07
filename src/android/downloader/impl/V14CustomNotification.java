@@ -16,7 +16,6 @@
 
 package com.google.android.vending.expansion.downloader.impl;
 
-import com.android.vending.expansion.downloader.R;
 import com.google.android.vending.expansion.downloader.Helpers;
 
 import android.app.Notification;
@@ -67,7 +66,7 @@ public class V14CustomNotification implements DownloadNotification.ICustomNotifi
             builder.setProgress(0, 0, true);
         }
         builder.setContentText(Helpers.getDownloadProgressString(mCurrentKB, mTotalKB));
-        builder.setContentInfo(c.getString(R.string.time_remaining_notification,
+        builder.setContentInfo(c.getString("1$s left",
                 Helpers.getTimeRemaining(mTimeRemaining)));
         if (mIcon != 0) {
             builder.setSmallIcon(mIcon);

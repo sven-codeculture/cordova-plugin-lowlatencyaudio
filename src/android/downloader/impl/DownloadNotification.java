@@ -16,7 +16,6 @@
 
 package com.google.android.vending.expansion.downloader.impl;
 
-import com.android.vending.expansion.downloader.R;
 import com.google.android.vending.expansion.downloader.DownloadProgressInfo;
 import com.google.android.vending.expansion.downloader.DownloaderClientMarshaller;
 import com.google.android.vending.expansion.downloader.Helpers;
@@ -90,7 +89,7 @@ public class DownloadNotification implements IDownloaderClient {
             switch (newState) {
                 case 0:
                     iconResource = android.R.drawable.stat_sys_warning;
-                    stringDownloadID = R.string.state_unknown;
+                    stringDownloadID = "Starting...";
                     ongoingEvent = false;
                     break;
 

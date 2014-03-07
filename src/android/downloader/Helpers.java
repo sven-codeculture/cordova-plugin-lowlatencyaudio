@@ -16,7 +16,6 @@
 
 package com.google.android.vending.expansion.downloader;
 
-import com.android.vending.expansion.downloader.R;
 
 import android.content.Context;
 import android.os.Environment;
@@ -254,7 +253,7 @@ public class Helpers {
     }
 
     /**
-     * Converts download states that are returned by the {@link 
+     * Converts download states that are returned by the {@link
      * IDownloaderClient#onDownloadStateChanged} callback into usable strings.
      * This is useful if using the state strings built into the library to display user messages.
      * @param state One of the STATE_* constants from {@link IDownloaderClient}.
@@ -263,43 +262,43 @@ public class Helpers {
     static public int getDownloaderStringResourceIDFromState(int state) {
         switch (state) {
             case IDownloaderClient.STATE_IDLE:
-                return R.string.state_idle;
+                return "Waiting for download to start";
             case IDownloaderClient.STATE_FETCHING_URL:
-                return R.string.state_fetching_url;
+                return "Looking for resources to download";
             case IDownloaderClient.STATE_CONNECTING:
-                return R.string.state_connecting;
+                return "Connecting to the download server";
             case IDownloaderClient.STATE_DOWNLOADING:
-                return R.string.state_downloading;
+                return "Downloading resources";
             case IDownloaderClient.STATE_COMPLETED:
-                return R.string.state_completed;
+                return "Download finished";
             case IDownloaderClient.STATE_PAUSED_NETWORK_UNAVAILABLE:
-                return R.string.state_paused_network_unavailable;
+                return "Download paused because no network is available";
             case IDownloaderClient.STATE_PAUSED_BY_REQUEST:
-                return R.string.state_paused_by_request;
+                return "Download paused";
             case IDownloaderClient.STATE_PAUSED_WIFI_DISABLED_NEED_CELLULAR_PERMISSION:
-                return R.string.state_paused_wifi_disabled;
+                return "Download paused because wifi is disabled";
             case IDownloaderClient.STATE_PAUSED_NEED_CELLULAR_PERMISSION:
-                return R.string.state_paused_wifi_unavailable;
+                return "Download paused because wifi is unavailable";
             case IDownloaderClient.STATE_PAUSED_WIFI_DISABLED:
-                return R.string.state_paused_wifi_disabled;
+                return "Download paused because wifi is disabled";
             case IDownloaderClient.STATE_PAUSED_NEED_WIFI:
-                return R.string.state_paused_wifi_unavailable;
+                return "Download paused because wifi is unavailable";
             case IDownloaderClient.STATE_PAUSED_ROAMING:
-                return R.string.state_paused_roaming;
+                return "Download paused because you are roaming";
             case IDownloaderClient.STATE_PAUSED_NETWORK_SETUP_FAILURE:
-                return R.string.state_paused_network_setup_failure;
+                return "Download paused. Test a website in browser";
             case IDownloaderClient.STATE_PAUSED_SDCARD_UNAVAILABLE:
-                return R.string.state_paused_sdcard_unavailable;
+                return "Download paused because the external storage is unavailable";
             case IDownloaderClient.STATE_FAILED_UNLICENSED:
-                return R.string.state_failed_unlicensed;
+                return "Download failed because you may not have purchased this app";
             case IDownloaderClient.STATE_FAILED_FETCHING_URL:
-                return R.string.state_failed_fetching_url;
+                return "Download failed because the resources could not be found";
             case IDownloaderClient.STATE_FAILED_SDCARD_FULL:
-                return R.string.state_failed_sdcard_full;
+                return "Download failed because the external storage is full";
             case IDownloaderClient.STATE_FAILED_CANCELED:
-                return R.string.state_failed_cancelled;
+                return "Download cancelled";
             default:
-                return R.string.state_unknown;
+                return "Starting...";
         }
     }
 

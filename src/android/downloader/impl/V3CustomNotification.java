@@ -16,7 +16,6 @@
 
 package com.google.android.vending.expansion.downloader.impl;
 
-import com.android.vending.expansion.downloader.R;
 import com.google.android.vending.expansion.downloader.Helpers;
 
 import android.app.Notification;
@@ -88,7 +87,7 @@ public class V3CustomNotification implements DownloadNotification.ICustomNotific
         expandedView.setViewVisibility(R.id.time_remaining, View.VISIBLE);
         expandedView.setTextViewText(
                 R.id.time_remaining,
-                c.getString(R.string.time_remaining_notification,
+                c.getString("1$s left",
                         Helpers.getTimeRemaining(mTimeRemaining)));
         expandedView.setTextViewText(R.id.progress_text,
                 Helpers.getDownloadProgressPercent(mCurrentBytes, mTotalBytes));
