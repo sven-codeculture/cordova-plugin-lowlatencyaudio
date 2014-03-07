@@ -32,6 +32,10 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
 
+import com.android.vending.expansion.zipfile.APKExpansionSupport;
+import com.android.vending.expansion.zipfile.ZipResourceFile;
+import com.google.android.vending.expansion.downloader.Helpers;
+
 /**
  * @author triceam
  *
@@ -99,14 +103,18 @@ public class LowLatencyAudio extends CordovaPlugin {
 					voices = data.getInt(2);
 				}
 
-				String fullPath = "www/".concat(assetPath);
-
-				Context ctx = cordova.getActivity().getApplicationContext();
-				AssetManager am = ctx.getResources().getAssets();
-				AssetFileDescriptor afd = am.openFd(fullPath);
-
-				LowLatencyAudioAsset asset = new LowLatencyAudioAsset(
-						afd, voices);
+				String fullPath;
+                AssetFileDescriptor afd;
+                Context ctx = cordova.getActivity().getApplicationContext();
+                if(assetPath.startsWith("~/")) {
+                    afd = this.getExternalAssets(ctx, assetPath.substring(2))
+                } else {
+                    fullPath = "www/".concat(assetPath);
+                    AssetManager am = ctx.getResources().getAssets();
+                    afd = am.openFd(fullPath);
+                }
+                LowLatencyAudioAsset asset = new LowLatencyAudioAsset(
+                        afd, voices);
 				assetMap.put(audioID, asset);
 
 				return new PluginResult(Status.OK);
@@ -287,4 +295,21 @@ public class LowLatencyAudio extends CordovaPlugin {
 			assetMap = new HashMap<String, LowLatencyAudioAsset>();
 		}
 	}
+
+    private AssetFileDescriptor getExternalAssets(Context ctx, String filename) throws IOException {
+        // Get APKExpensionFile
+        ZipResourceFile expansionFile = APKExpansionSupport.getAPKExpansionZipFile(ctx, XAPKReader.mainVersion, XAPKReader.patchVersion);
+
+        if (null == expansionFile) {
+            Log.e("XAPKReader", "APKExpansionFile not found.");
+            return null;
+        }
+
+        // Find file in ExpansionFile
+        String fileName = Helpers.getExpansionAPKFileName(ctx, true, XAPKReader.patchVersion);
+        fileName = fileName.substring(0, fileName.lastIndexOf("."));
+        AssetFileDescriptor file = expansionFile.getAssetFileDescriptor(fileName + "/" + filename);
+
+        return file;
+    }
 }
