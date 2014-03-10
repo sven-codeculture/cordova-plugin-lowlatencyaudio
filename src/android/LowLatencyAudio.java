@@ -54,7 +54,8 @@ public class LowLatencyAudio extends CordovaPlugin {
 	public static final String STOP="stop";
 	public static final String LOOP="loop";
 	public static final String UNLOAD="unload";
-	
+	public static final String ASSETCHECK="assetCheck";
+
 	public static final int DEFAULT_POLYPHONY_VOICES = 15;
 	
 	private static final String LOGTAG = "LowLatencyAudio";
@@ -74,7 +75,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 
            Log.d(LOGTAG, "Starting intend " + intent);
 
-           this.cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
+           this.cordova.startActivityForResult((CordovaPlugin) this, intent, 234256412);
            return new PluginResult(Status.OK);
        } catch (Exception e) {
            return new PluginResult(Status.ERROR, e.getMessage());
@@ -294,7 +295,13 @@ public class LowLatencyAudio extends CordovaPlugin {
 						callbackContext.sendPluginResult( executeUnload(data) );
 		            }
 		        });
-				
+			} else if (ASSETCHECK.equals(action)) {
+				cordova.getThreadPool().execute(new Runnable() {
+		            public void run() {
+						callbackContext.sendPluginResult( executeAssetCheck(data) );
+		            }
+		        });
+
 			} else {
 				result = new PluginResult(Status.OK);
 			}
