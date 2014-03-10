@@ -57,10 +57,11 @@ public class LowLatencyAudio extends CordovaPlugin {
 	public static final String ASSETCHECK="assetCheck";
 
 	public static final int DEFAULT_POLYPHONY_VOICES = 15;
-	
-	private static final String LOGTAG = "LowLatencyAudio";
-	
-	private static SoundPool soundPool;
+
+    private static final String LOGTAG = "LowLatencyAudio";
+    public static final int REQUEST_CODE = 234256412;
+
+    private static SoundPool soundPool;
 	private static HashMap<String, LowLatencyAudioAsset> assetMap; 
 	private static HashMap<String, Integer> soundMap; 
 	private static HashMap<String, ArrayList<Integer>> streamMap;
@@ -75,7 +76,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 
            Log.d(LOGTAG, "Starting intend " + intent);
 
-           this.cordova.startActivityForResult((CordovaPlugin) this, intent, 234256412);
+           this.cordova.startActivityForResult((CordovaPlugin) this, intent, REQUEST_CODE);
            return new PluginResult(Status.OK);
        } catch (Exception e) {
            return new PluginResult(Status.ERROR, e.getMessage());
@@ -331,6 +332,14 @@ public class LowLatencyAudio extends CordovaPlugin {
 			assetMap = new HashMap<String, LowLatencyAudioAsset>();
 		}
 	}
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == REQUEST_CODE) {
+            Log.d(LOGTAG, String.valueOf(resultCode));
+            Log.d(LOGTAG, intent.toString());
+        }
+    }
 
     private AssetFileDescriptor getExternalAssets(Context ctx, String filename) throws IOException {
         // Get APKExpensionFile
