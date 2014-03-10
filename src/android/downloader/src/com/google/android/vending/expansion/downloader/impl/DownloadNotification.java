@@ -89,7 +89,7 @@ public class DownloadNotification implements IDownloaderClient {
             switch (newState) {
                 case 0:
                     iconResource = android.R.drawable.stat_sys_warning;
-                    stringDownloadID = "Starting...";
+                    stringDownloadID = Helpers.fakeR.getId("string", "state_unknown");
                     ongoingEvent = false;
                     break;
 

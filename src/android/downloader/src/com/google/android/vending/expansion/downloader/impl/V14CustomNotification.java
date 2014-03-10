@@ -66,7 +66,7 @@ public class V14CustomNotification implements DownloadNotification.ICustomNotifi
             builder.setProgress(0, 0, true);
         }
         builder.setContentText(Helpers.getDownloadProgressString(mCurrentKB, mTotalKB));
-        builder.setContentInfo(c.getString("1$s left",
+        builder.setContentInfo(c.getString(Helpers.fakeR.getId("string", "time_remaining_notification"),
                 Helpers.getTimeRemaining(mTimeRemaining)));
         if (mIcon != 0) {
             builder.setSmallIcon(mIcon);

@@ -22,6 +22,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.os.SystemClock;
 import android.util.Log;
+import com.google.android.vending.expansion.downloader.FakeR;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -38,6 +39,8 @@ import java.util.regex.Pattern;
 public class Helpers {
 
     public static Random sRandom = new Random(SystemClock.uptimeMillis());
+    public static FakeR fakeR;
+    public static Context ctx;
 
     /** Regex used to parse content-disposition headers */
     private static final Pattern CONTENT_DISPOSITION_PATTERN = Pattern
@@ -253,7 +256,7 @@ public class Helpers {
     }
 
     /**
-     * Converts download states that are returned by the {@link
+     * Converts download states that are returned by the {@link 
      * IDownloaderClient#onDownloadStateChanged} callback into usable strings.
      * This is useful if using the state strings built into the library to display user messages.
      * @param state One of the STATE_* constants from {@link IDownloaderClient}.
@@ -262,43 +265,43 @@ public class Helpers {
     static public int getDownloaderStringResourceIDFromState(int state) {
         switch (state) {
             case IDownloaderClient.STATE_IDLE:
-                return "Waiting for download to start";
+                return Helpers.fakeR.getId("string", "state_idle");
             case IDownloaderClient.STATE_FETCHING_URL:
-                return "Looking for resources to download";
+                return Helpers.fakeR.getId("string", "state_fetching_url");
             case IDownloaderClient.STATE_CONNECTING:
-                return "Connecting to the download server";
+                return Helpers.fakeR.getId("string", "state_connecting");
             case IDownloaderClient.STATE_DOWNLOADING:
-                return "Downloading resources";
+                return Helpers.fakeR.getId("string", "state_downloading");
             case IDownloaderClient.STATE_COMPLETED:
-                return "Download finished";
+                return Helpers.fakeR.getId("string", "state_completed");
             case IDownloaderClient.STATE_PAUSED_NETWORK_UNAVAILABLE:
-                return "Download paused because no network is available";
+                return Helpers.fakeR.getId("string", "state_paused_network_unavailable");
             case IDownloaderClient.STATE_PAUSED_BY_REQUEST:
-                return "Download paused";
+                return Helpers.fakeR.getId("string", "state_paused_by_request");
             case IDownloaderClient.STATE_PAUSED_WIFI_DISABLED_NEED_CELLULAR_PERMISSION:
-                return "Download paused because wifi is disabled";
+                return Helpers.fakeR.getId("string", "state_paused_wifi_disabled");
             case IDownloaderClient.STATE_PAUSED_NEED_CELLULAR_PERMISSION:
-                return "Download paused because wifi is unavailable";
+                return Helpers.fakeR.getId("string", "state_paused_wifi_unavailable");
             case IDownloaderClient.STATE_PAUSED_WIFI_DISABLED:
-                return "Download paused because wifi is disabled";
+                return Helpers.fakeR.getId("string", "state_paused_wifi_disabled");
             case IDownloaderClient.STATE_PAUSED_NEED_WIFI:
-                return "Download paused because wifi is unavailable";
+                return Helpers.fakeR.getId("string", "state_paused_wifi_unavailable");
             case IDownloaderClient.STATE_PAUSED_ROAMING:
-                return "Download paused because you are roaming";
+                return Helpers.fakeR.getId("string", "state_paused_roaming");
             case IDownloaderClient.STATE_PAUSED_NETWORK_SETUP_FAILURE:
-                return "Download paused. Test a website in browser";
+                return Helpers.fakeR.getId("string", "state_paused_network_setup_failure");
             case IDownloaderClient.STATE_PAUSED_SDCARD_UNAVAILABLE:
-                return "Download paused because the external storage is unavailable";
+                return Helpers.fakeR.getId("string", "state_paused_sdcard_unavailable");
             case IDownloaderClient.STATE_FAILED_UNLICENSED:
-                return "Download failed because you may not have purchased this app";
+                return Helpers.fakeR.getId("string", "state_failed_unlicensed");
             case IDownloaderClient.STATE_FAILED_FETCHING_URL:
-                return "Download failed because the resources could not be found";
+                return Helpers.fakeR.getId("string", "state_failed_fetching_url");
             case IDownloaderClient.STATE_FAILED_SDCARD_FULL:
-                return "Download failed because the external storage is full";
+                return Helpers.fakeR.getId("string", "state_failed_sdcard_full");
             case IDownloaderClient.STATE_FAILED_CANCELED:
-                return "Download cancelled";
+                return Helpers.fakeR.getId("string", "state_failed_cancelled");
             default:
-                return "Starting...";
+                return Helpers.fakeR.getId("string", "state_unknown");
         }
     }
 

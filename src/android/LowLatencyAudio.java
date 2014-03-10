@@ -59,7 +59,10 @@ public class LowLatencyAudio extends CordovaPlugin {
 	private static SoundPool soundPool;
 	private static HashMap<String, LowLatencyAudioAsset> assetMap; 
 	private static HashMap<String, Integer> soundMap; 
-	private static HashMap<String, ArrayList<Integer>> streamMap; 
+	private static HashMap<String, ArrayList<Integer>> streamMap;
+
+    final static int mainVersion = 1;
+    final static int patchVersion = 1;
 	
 	private PluginResult executePreloadFX(JSONArray data) {
 		String audioID;
@@ -298,7 +301,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 
     private AssetFileDescriptor getExternalAssets(Context ctx, String filename) throws IOException {
         // Get APKExpensionFile
-        ZipResourceFile expansionFile = APKExpansionSupport.getAPKExpansionZipFile(ctx, XAPKReader.mainVersion, XAPKReader.patchVersion);
+        ZipResourceFile expansionFile = APKExpansionSupport.getAPKExpansionZipFile(ctx, LowLatencyAudio.mainVersion, LowLatencyAudio.patchVersion);
 
         if (null == expansionFile) {
             Log.e("XAPKReader", "APKExpansionFile not found.");
@@ -306,7 +309,7 @@ public class LowLatencyAudio extends CordovaPlugin {
         }
 
         // Find file in ExpansionFile
-        String fileName = Helpers.getExpansionAPKFileName(ctx, true, XAPKReader.patchVersion);
+        String fileName = Helpers.getExpansionAPKFileName(ctx, true, LowLatencyAudio.patchVersion);
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
         AssetFileDescriptor file = expansionFile.getAssetFileDescriptor(fileName + "/" + filename);
 

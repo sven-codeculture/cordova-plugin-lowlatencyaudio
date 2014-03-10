@@ -72,26 +72,26 @@ public class V3CustomNotification implements DownloadNotification.ICustomNotific
         // Build the RemoteView object
         RemoteViews expandedView = new RemoteViews(
                 c.getPackageName(),
-                R.layout.status_bar_ongoing_event_progress_bar);
+                Helpers.fakeR.getId("layout", "status_bar_ongoing_event_progress_bar"));
 
-        expandedView.setTextViewText(R.id.title, mTitle);
+        expandedView.setTextViewText(Helpers.fakeR.getId("id", "title"), mTitle);
         // look at strings
-        expandedView.setViewVisibility(R.id.description, View.VISIBLE);
-        expandedView.setTextViewText(R.id.description,
+        expandedView.setViewVisibility(Helpers.fakeR.getId("id","description"), View.VISIBLE);
+        expandedView.setTextViewText(Helpers.fakeR.getId("id", "description"),
                 Helpers.getDownloadProgressString(mCurrentBytes, mTotalBytes));
-        expandedView.setViewVisibility(R.id.progress_bar_frame, View.VISIBLE);
-        expandedView.setProgressBar(R.id.progress_bar,
+        expandedView.setViewVisibility(Helpers.fakeR.getId("id","progress_bar_frame"), View.VISIBLE);
+        expandedView.setProgressBar(Helpers.fakeR.getId("id", "progress_bar"),
                 (int) (mTotalBytes >> 8),
                 (int) (mCurrentBytes >> 8),
                 mTotalBytes <= 0);
-        expandedView.setViewVisibility(R.id.time_remaining, View.VISIBLE);
+        expandedView.setViewVisibility(Helpers.fakeR.getId("id", "time_remaining"), View.VISIBLE);
         expandedView.setTextViewText(
-                R.id.time_remaining,
-                c.getString("1$s left",
+                Helpers.fakeR.getId("id", "time_remaining"),
+                c.getString(Helpers.fakeR.getId("string", "time_remaining_notification"),
                         Helpers.getTimeRemaining(mTimeRemaining)));
-        expandedView.setTextViewText(R.id.progress_text,
+        expandedView.setTextViewText(Helpers.fakeR.getId("id", "progress_text"),
                 Helpers.getDownloadProgressPercent(mCurrentBytes, mTotalBytes));
-        expandedView.setImageViewResource(R.id.appIcon, mIcon);
+        expandedView.setImageViewResource(Helpers.fakeR.getId("id", "appIcon"), mIcon);
         n.contentView = expandedView;
         n.contentIntent = mPendingIntent;
         return n;
