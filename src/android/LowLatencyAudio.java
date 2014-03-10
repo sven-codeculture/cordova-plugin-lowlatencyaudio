@@ -323,6 +323,7 @@ public class LowLatencyAudio extends CordovaPlugin {
         String fileName = Helpers.getExpansionAPKFileName(ctx, true, LowLatencyAudio.patchVersion);
         fileName = fileName.substring(0, fileName.lastIndexOf("."));
         AssetFileDescriptor file = expansionFile.getAssetFileDescriptor(fileName + "/" + filename);
+        Log.d(LOGTAG, "External file: " + fileName + "/" + filename);
 
         return file;
     }
