@@ -382,6 +382,8 @@ public class LowLatencyAudioDownloaderActivity extends Activity implements IDown
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d(LOG_TAG, "Starting DownloadActivity UI");
+
         /**
          * Both downloading and validation make use of the "download" UI
          */
