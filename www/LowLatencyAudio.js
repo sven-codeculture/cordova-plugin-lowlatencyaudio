@@ -24,9 +24,13 @@ var argscheck = require('cordova/argscheck'),
 
 var mplExport = {
 
-preloadFX: function ( id, assetPath, success, fail) {
+assetCheck: function ( success, fail) {
+    return cordova.exec(success, fail, "LowLatencyAudio", "assetCheck");
+}
+
+,preloadFX: function ( id, assetPath, success, fail) {
     return cordova.exec(success, fail, "LowLatencyAudio", "preloadFX", [id, assetPath]);
-},    
+},
     
 preloadAudio: function ( id, assetPath, voices, success, fail) {
 	if(voices === undefined) voices = 1;

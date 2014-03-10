@@ -67,15 +67,14 @@ public class LowLatencyAudio extends CordovaPlugin {
     final static int mainVersion = 1;
     final static int patchVersion = 1;
 
-   public LowLatencyAudio() {
-       super();
-
+    private PluginResult executeAssetCheck(JSONArray data) {
        try {
            LowLatencyAudioDownloaderActivity activity = new LowLatencyAudioDownloaderActivity();
            Intent intent = new Intent(activity, LowLatencyAudioDownloaderActivity.class);
            activity.startActivity(intent);
+           return new PluginResult(Status.OK);
        } catch (Exception e) {
-           Log.d(LOGTAG, e.getMessage());
+           return new PluginResult(Status.ERROR, e.getMessage());
        }
    }
 
