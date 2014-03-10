@@ -28,7 +28,7 @@ public class FakeR {
         return context.getResources().getIdentifier(key, group, packageName);
     }
 
-    public static int getId(Context context, String group, String key) {
+    public int getId(Context context, String group, String key) {
         return context.getResources().getIdentifier(key, group, context.getPackageName());
     }
 }

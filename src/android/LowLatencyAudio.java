@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.google.android.vending.expansion.downloader.FakeR;
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -63,6 +64,11 @@ public class LowLatencyAudio extends CordovaPlugin {
 
     final static int mainVersion = 1;
     final static int patchVersion = 1;
+
+    public LowLatencyAudio() {
+        Context ctx = cordova.getActivity().getApplicationContext();
+        Helpers.fakeR = new FakeR(ctx);
+    }
 	
 	private PluginResult executePreloadFX(JSONArray data) {
 		String audioID;

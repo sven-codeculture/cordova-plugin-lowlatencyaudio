@@ -40,7 +40,6 @@ public class Helpers {
 
     public static Random sRandom = new Random(SystemClock.uptimeMillis());
     public static FakeR fakeR;
-    public static Context ctx;
 
     /** Regex used to parse content-disposition headers */
     private static final Pattern CONTENT_DISPOSITION_PATTERN = Pattern
