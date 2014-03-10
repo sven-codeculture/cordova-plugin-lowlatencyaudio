@@ -66,6 +66,16 @@ public class LowLatencyAudio extends CordovaPlugin {
     final static int mainVersion = 1;
     final static int patchVersion = 1;
 
+   public LowLatencyAudio() {
+       super();
+
+       try {
+        LowLatencyDownloaderService service = new LowLatencyDownloaderService();
+       } catch (Exception e) {
+           Log.d(LOGTAG, e.toString());
+       }
+   }
+
    private PluginResult executePreloadFX(JSONArray data) {
 		String audioID;
 		try {
