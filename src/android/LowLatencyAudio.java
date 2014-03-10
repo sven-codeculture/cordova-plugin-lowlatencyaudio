@@ -133,7 +133,9 @@ public class LowLatencyAudio extends CordovaPlugin {
 			return new PluginResult(Status.ERROR, e.toString());
 		} catch (IOException e) {
 			return new PluginResult(Status.ERROR, e.toString());
-		}		
+		} catch (Exception e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        }
 	}
 	
 	private PluginResult executePlayOrLoop(String action, JSONArray data) {
