@@ -65,12 +65,7 @@ public class LowLatencyAudio extends CordovaPlugin {
     final static int mainVersion = 1;
     final static int patchVersion = 1;
 
-    public LowLatencyAudio() {
-        Context ctx = cordova.getActivity().getApplicationContext();
-        Helpers.fakeR = new FakeR(ctx);
-    }
-	
-	private PluginResult executePreloadFX(JSONArray data) {
+   private PluginResult executePreloadFX(JSONArray data) {
 		String audioID;
 		try {
 			audioID = data.getString(0);
@@ -98,6 +93,11 @@ public class LowLatencyAudio extends CordovaPlugin {
 	}
 	
 	private PluginResult executePreloadAudio(JSONArray data) {
+        Context ctx = cordova.getActivity().getApplicationContext();
+        if(Helpers.fakeR == null) {
+            Helpers.fakeR = new FakeR(ctx);
+        }
+
 		String audioID;
 		try {
 			audioID = data.getString(0);
@@ -114,7 +114,6 @@ public class LowLatencyAudio extends CordovaPlugin {
 
 				String fullPath;
                 AssetFileDescriptor afd;
-                Context ctx = cordova.getActivity().getApplicationContext();
                 if(assetPath.startsWith("~/")) {
                     afd = this.getExternalAssets(ctx, assetPath.substring(2));
                 } else {
