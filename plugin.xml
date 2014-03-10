@@ -34,6 +34,7 @@
         <source-file src="src/android/PolyphonicVoice.java" target-dir="src/com/rjfun/cordova/plugin" />
         <source-file src="src/android/LowLatencyDownloaderService.java" target-dir="src/com/rjfun/cordova/plugin" />
         <source-file src="src/android/LowLatacyAudioSystemAlarmReceiver.java" target-dir="src/com/rjfun/cordova/plugin" />
+        <source-file src="src/android/LowLatencyAudioDownloaderActivity.java" target-dir="src/com/rjfun/cordova/plugin" />
 
         <!-- Downloader Library -->
         <source-file src="src/android/downloader/src/com/google/android/vending/expansion/downloader/Constants.java"
