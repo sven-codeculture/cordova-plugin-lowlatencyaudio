@@ -337,7 +337,6 @@ public class LowLatencyAudio extends CordovaPlugin {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_CODE) {
             Log.d(LOGTAG, String.valueOf(resultCode));
-            Log.d(LOGTAG, intent.toString());
         }
     }
 

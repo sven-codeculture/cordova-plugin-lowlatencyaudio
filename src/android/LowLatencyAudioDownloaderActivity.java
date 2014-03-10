@@ -387,12 +387,15 @@ public class LowLatencyAudioDownloaderActivity extends Activity implements IDown
          */
         initializeDownloadUI();
 
+        Log.d(LOG_TAG, "Starting DownloadActivity");
+
         /**
          * Before we do anything, are the files we expect already here and
          * delivered (presumably by Market) For free titles, this is probably
          * worth doing. (so no Market request is necessary)
          */
         if (!expansionFilesDelivered()) {
+            Log.d(LOG_TAG, "Initialing DownloadService and Activity!");
 
             try {
                 Intent launchIntent = LowLatencyAudioDownloaderActivity.this
