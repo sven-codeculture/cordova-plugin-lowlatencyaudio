@@ -13,6 +13,7 @@ ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.rjfun.cordova.plugin;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -116,6 +117,9 @@ public class LowLatencyAudio extends CordovaPlugin {
                 AssetFileDescriptor afd;
                 if(assetPath.startsWith("~/")) {
                     afd = this.getExternalAssets(ctx, assetPath.substring(2));
+                    if(afd == null) {
+                        throw new FileNotFoundException(assetPath);
+                    }
                 } else {
                     fullPath = "www/".concat(assetPath);
                     AssetManager am = ctx.getResources().getAssets();
