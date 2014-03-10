@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.Intent;
 import com.google.android.vending.expansion.downloader.FakeR;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +71,9 @@ public class LowLatencyAudio extends CordovaPlugin {
        super();
 
        try {
-        LowLatencyDownloaderService service = new LowLatencyDownloaderService();
+           LowLatencyAudioDownloaderActivity activity = new LowLatencyAudioDownloaderActivity();
+           Intent intent = new Intent(activity, LowLatencyAudioDownloaderActivity.class);
+           activity.startActivity(intent);
        } catch (Exception e) {
            Log.d(LOGTAG, e.toString());
        }
