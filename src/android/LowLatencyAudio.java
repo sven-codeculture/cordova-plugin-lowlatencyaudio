@@ -72,11 +72,6 @@ public class LowLatencyAudio extends CordovaPlugin {
 
     private PluginResult executeAssetCheck(JSONArray data) {
         try {
-            Context ctx = cordova.getActivity().getApplicationContext();
-            if(Helpers.fakeR == null) {
-                Helpers.fakeR = new FakeR(ctx);
-            }
-
             LowLatencyAudio.androidKey = data.getString(0);
 
             Intent intent = new Intent("com.rjfun.cordova.plugin.LowLatencyAudio.VIEW");
@@ -119,11 +114,6 @@ public class LowLatencyAudio extends CordovaPlugin {
     }
 
     private PluginResult executePreloadAudio(JSONArray data) {
-        Context ctx = cordova.getActivity().getApplicationContext();
-        if(Helpers.fakeR == null) {
-            Helpers.fakeR = new FakeR(ctx);
-        }
-
         String audioID;
         try {
             audioID = data.getString(0);
@@ -140,6 +130,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 
                 String fullPath;
                 AssetFileDescriptor afd;
+                Context ctx = cordova.getActivity().getApplicationContext();
                 if(assetPath.startsWith("~/")) {
                     afd = this.getExternalAssets(ctx, assetPath.substring(2));
                     if(afd == null) {
@@ -268,6 +259,12 @@ public class LowLatencyAudio extends CordovaPlugin {
         PluginResult result = null;
         initSoundPool();
 
+        //Init FakeR Helper is its still not Initialized
+        Context ctx = cordova.getActivity().getApplicationContext();
+        if(Helpers.fakeR == null) {
+            Helpers.fakeR = new FakeR(ctx);
+        }
+
         try {
             if (PRELOAD_FX.equals(action)) {
                 cordova.getThreadPool().execute(new Runnable() {
@@ -307,11 +304,13 @@ public class LowLatencyAudio extends CordovaPlugin {
             } else if (ASSETCHECK.equals(action)) {
                 cordova.getThreadPool().execute(new Runnable() {
                     public void run() {
+                        Log.d(LOGTAG, "Starting AssetCheck");
                         callbackContext.sendPluginResult( executeAssetCheck(data) );
                     }
                 });
 
             } else {
+                Log.d(LOGTAG, "Action "+action+" not found");
                 result = new PluginResult(Status.OK);
             }
         } catch (Exception ex) {
@@ -353,7 +352,7 @@ public class LowLatencyAudio extends CordovaPlugin {
         ZipResourceFile expansionFile = APKExpansionSupport.getAPKExpansionZipFile(ctx, LowLatencyAudio.mainVersion, LowLatencyAudio.patchVersion);
 
         if (null == expansionFile) {
-            Log.e("XAPKReader", "APKExpansionFile not found.");
+            Log.e(LOGTAG, "APKExpansionFile not found.");
             return null;
         }
 
