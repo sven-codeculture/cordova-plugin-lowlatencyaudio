@@ -24,6 +24,7 @@ import com.google.android.vending.expansion.downloader.impl.DownloaderService;
  */
 public class LowLatencyDownloaderService extends DownloaderService {
     // stuff for LVL -- MODIFY FOR YOUR APPLICATION!
+    private static final String BASE64_PUBLIC_KEY = "asfsafsafasfsafsafewqfqwfwqfqwfwqfwqfqwfrtr";
     // used by the preference obfuscater
     private static final byte[] SALT = new byte[] {
             1, 43, -12, -1, 54, 98,
@@ -36,7 +37,7 @@ public class LowLatencyDownloaderService extends DownloaderService {
      */
     @Override
     public String getPublicKey() {
-        return LowLatencyAudio.androidKey;
+        return BASE64_PUBLIC_KEY;
     }
 
     /**
