@@ -29,7 +29,7 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:label="@string/share_name" android:name="com.rjfun.cordova.plugin.LowLatencyAudioDownloaderActivity">
+            <activity android:label="@string/share_name" android:name="com.rjfun.cordova.plugin.LowLatencyAudio.VIEW">
                 <intent-filter>
                     <action android:name="android.intent.action.MAIN" />
                     <category android:name="android.intent.category.DEFAULT" />
@@ -54,6 +54,9 @@
         <source-file src="src/android/LowLatencyDownloaderService.java" target-dir="src/com/rjfun/cordova/plugin" />
         <source-file src="src/android/LowLatacyAudioSystemAlarmReceiver.java" target-dir="src/com/rjfun/cordova/plugin" />
         <source-file src="src/android/LowLatencyAudioDownloaderActivity.java" target-dir="src/com/rjfun/cordova/plugin" />
+
+        <!-- Layout file -->
+        <source-file src="src/android/layout/downloader.xml" target-dir="res/layout" />
 
         <!-- Downloader Library -->
         <source-file src="src/android/downloader/src/com/google/android/vending/expansion/downloader/Constants.java"

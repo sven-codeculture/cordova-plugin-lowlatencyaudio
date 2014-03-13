@@ -126,7 +126,7 @@ public class LowLatencyAudioDownloaderActivity extends Activity implements IDown
                     4, // the version of the APK that the patch file was uploaded
                        // against
                     512860L // the length of the patch file in bytes
-            )            
+            )
     };
 
     /**
@@ -328,7 +328,7 @@ public class LowLatencyAudioDownloaderActivity extends Activity implements IDown
     private void initializeDownloadUI() {
         mDownloaderClientStub = DownloaderClientMarshaller.CreateStub
                 (this, LowLatencyDownloaderService.class);
-        setContentView(Helpers.fakeR.getId("layout", "main"));
+        setContentView(Helpers.fakeR.getId("layout", "downloader"));
 
         mPB = (ProgressBar) findViewById(Helpers.fakeR.getId("id", "progressBar"));
         mStatusText = (TextView) findViewById(Helpers.fakeR.getId("id", "statusText"));
