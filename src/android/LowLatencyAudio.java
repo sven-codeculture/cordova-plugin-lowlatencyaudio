@@ -71,12 +71,13 @@ public class LowLatencyAudio extends CordovaPlugin {
 
     private PluginResult executeAssetCheck(JSONArray data) {
        try {
-           Intent intent = new Intent(this.cordova.getActivity(), LowLatencyAudioDownloaderActivity.class);
+           Context ctx = this.cordova.getActivity().getApplicationContext();
+           Intent intent = new Intent(ctx, LowLatencyAudioDownloaderActivity.class);
            intent.addCategory(Intent.CATEGORY_DEFAULT);
 
            Log.d(LOGTAG, "Starting intend " + intent);
 
-           this.cordova.startActivityForResult((CordovaPlugin) this, intent, REQUEST_CODE);
+           ctx.startActivity(intent);
            return new PluginResult(Status.OK);
        } catch (Exception e) {
            return new PluginResult(Status.ERROR, e.getMessage());

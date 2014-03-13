@@ -26,6 +26,13 @@
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
+            <activity android:label="@string/share_name" android:name="com.rjfun.cordova.plugin.LowLatencyAudioDownloaderActivity">
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW" />
+                    <category android:name="android.intent.category.DEFAULT" />
+                </intent-filter>
+            </activity>
+
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-file>
 
