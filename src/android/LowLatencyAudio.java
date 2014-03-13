@@ -45,92 +45,100 @@ import com.google.android.vending.expansion.downloader.Helpers;
  */
 public class LowLatencyAudio extends CordovaPlugin {
 
-	public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id.";
-	public static final String ERROR_AUDIOID_EXISTS="A reference already exists for the specified audio id.";
-	
-	public static final String PRELOAD_FX="preloadFX";
-	public static final String PRELOAD_AUDIO="preloadAudio";
-	public static final String PLAY="play";
-	public static final String STOP="stop";
-	public static final String LOOP="loop";
-	public static final String UNLOAD="unload";
-	public static final String ASSETCHECK="assetCheck";
+    public static final String ERROR_NO_AUDIOID="A reference does not exist for the specified audio id.";
+    public static final String ERROR_AUDIOID_EXISTS="A reference already exists for the specified audio id.";
 
-	public static final int DEFAULT_POLYPHONY_VOICES = 15;
+    public static final String PRELOAD_FX="preloadFX";
+    public static final String PRELOAD_AUDIO="preloadAudio";
+    public static final String PLAY="play";
+    public static final String STOP="stop";
+    public static final String LOOP="loop";
+    public static final String UNLOAD="unload";
+    public static final String ASSETCHECK="assetCheck";
+    public static String androidKey = "";
+
+    public static final int DEFAULT_POLYPHONY_VOICES = 15;
 
     private static final String LOGTAG = "LowLatencyAudio";
     public static final int REQUEST_CODE = 234256412;
 
     private static SoundPool soundPool;
-	private static HashMap<String, LowLatencyAudioAsset> assetMap; 
-	private static HashMap<String, Integer> soundMap; 
-	private static HashMap<String, ArrayList<Integer>> streamMap;
+    private static HashMap<String, LowLatencyAudioAsset> assetMap;
+    private static HashMap<String, Integer> soundMap;
+    private static HashMap<String, ArrayList<Integer>> streamMap;
 
     final static int mainVersion = 1;
     final static int patchVersion = 1;
 
     private PluginResult executeAssetCheck(JSONArray data) {
-       try {
-           Intent intent = new Intent("com.rjfun.cordova.plugin.LowLatencyAudio.VIEW");
-           intent.addCategory(Intent.CATEGORY_DEFAULT);
+        try {
+            Context ctx = cordova.getActivity().getApplicationContext();
+            if(Helpers.fakeR == null) {
+                Helpers.fakeR = new FakeR(ctx);
+            }
 
-           Log.d(LOGTAG, "Starting intend " + intent);
+            LowLatencyAudio.androidKey = data.getString(0);
 
-           this.cordova.startActivityForResult((CordovaPlugin) this, intent, REQUEST_CODE);
-           return new PluginResult(Status.OK);
-       } catch (Exception e) {
-           return new PluginResult(Status.ERROR, e.getMessage());
-       }
-   }
+            Intent intent = new Intent("com.rjfun.cordova.plugin.LowLatencyAudio.VIEW");
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
 
-   private PluginResult executePreloadFX(JSONArray data) {
-		String audioID;
-		try {
-			audioID = data.getString(0);
-			if (!soundMap.containsKey(audioID)) {
-				String assetPath = data.getString(1);
-				String fullPath = "www/".concat(assetPath);
-				
-				Log.d(LOGTAG, "preloadFX - " + audioID + ": " + assetPath);
+            Log.d(LOGTAG, "Starting intend " + intent);
 
-				Context ctx = cordova.getActivity().getApplicationContext();
-				AssetManager am = ctx.getResources().getAssets();
-				AssetFileDescriptor afd = am.openFd(fullPath);
-				int assetIntID = soundPool.load(afd, 1);
-				soundMap.put(audioID, assetIntID);
-			} else {
-				return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
-			}
-		} catch (JSONException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		} catch (IOException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		}
+            this.cordova.startActivityForResult((CordovaPlugin) this, intent, REQUEST_CODE);
+            return new PluginResult(Status.OK);
+        } catch (Exception e) {
+            return new PluginResult(Status.ERROR, e.getMessage());
+        }
+    }
 
-		return new PluginResult(Status.OK);
-	}
-	
-	private PluginResult executePreloadAudio(JSONArray data) {
+    private PluginResult executePreloadFX(JSONArray data) {
+        String audioID;
+        try {
+            audioID = data.getString(0);
+            if (!soundMap.containsKey(audioID)) {
+                String assetPath = data.getString(1);
+                String fullPath = "www/".concat(assetPath);
+
+                Log.d(LOGTAG, "preloadFX - " + audioID + ": " + assetPath);
+
+                Context ctx = cordova.getActivity().getApplicationContext();
+                AssetManager am = ctx.getResources().getAssets();
+                AssetFileDescriptor afd = am.openFd(fullPath);
+                int assetIntID = soundPool.load(afd, 1);
+                soundMap.put(audioID, assetIntID);
+            } else {
+                return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
+            }
+        } catch (JSONException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        } catch (IOException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        }
+
+        return new PluginResult(Status.OK);
+    }
+
+    private PluginResult executePreloadAudio(JSONArray data) {
         Context ctx = cordova.getActivity().getApplicationContext();
         if(Helpers.fakeR == null) {
             Helpers.fakeR = new FakeR(ctx);
         }
 
-		String audioID;
-		try {
-			audioID = data.getString(0);
-			if (!assetMap.containsKey(audioID)) {
-				String assetPath = data.getString(1);
-				Log.d(LOGTAG, "preloadAudio - " + audioID + ": " + assetPath);
+        String audioID;
+        try {
+            audioID = data.getString(0);
+            if (!assetMap.containsKey(audioID)) {
+                String assetPath = data.getString(1);
+                Log.d(LOGTAG, "preloadAudio - " + audioID + ": " + assetPath);
 
-				int voices;
-				if (data.length() < 2) {
-					voices = 0;
-				} else {
-					voices = data.getInt(2);
-				}
+                int voices;
+                if (data.length() < 2) {
+                    voices = 0;
+                } else {
+                    voices = data.getInt(2);
+                }
 
-				String fullPath;
+                String fullPath;
                 AssetFileDescriptor afd;
                 if(assetPath.startsWith("~/")) {
                     afd = this.getExternalAssets(ctx, assetPath.substring(2));
@@ -144,194 +152,194 @@ public class LowLatencyAudio extends CordovaPlugin {
                 }
                 LowLatencyAudioAsset asset = new LowLatencyAudioAsset(
                         afd, voices);
-				assetMap.put(audioID, asset);
+                assetMap.put(audioID, asset);
 
-				return new PluginResult(Status.OK);
-			} else {
-				return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
-			}
-		} catch (JSONException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		} catch (IOException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		} catch (Exception e) {
+                return new PluginResult(Status.OK);
+            } else {
+                return new PluginResult(Status.ERROR, ERROR_AUDIOID_EXISTS);
+            }
+        } catch (JSONException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        } catch (IOException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        } catch (Exception e) {
             return new PluginResult(Status.ERROR, e.toString());
         }
-	}
-	
-	private PluginResult executePlayOrLoop(String action, JSONArray data) {
-		String audioID;
-		try {
-			audioID = data.getString(0);
-			//Log.d( LOGTAG, "play - " + audioID );
+    }
 
-			if (assetMap.containsKey(audioID)) {
-				LowLatencyAudioAsset asset = assetMap.get(audioID);
-				if (LOOP.equals(action))
-					asset.loop();
-				else
-					asset.play();
-			} else if (soundMap.containsKey(audioID)) {
-				int loops = 0;
-				if (LOOP.equals(action)) {
-					loops = -1;
-				}
+    private PluginResult executePlayOrLoop(String action, JSONArray data) {
+        String audioID;
+        try {
+            audioID = data.getString(0);
+            //Log.d( LOGTAG, "play - " + audioID );
 
-				ArrayList<Integer> streams = streamMap.get(audioID);
-				if (streams == null)
-					streams = new ArrayList<Integer>();
+            if (assetMap.containsKey(audioID)) {
+                LowLatencyAudioAsset asset = assetMap.get(audioID);
+                if (LOOP.equals(action))
+                    asset.loop();
+                else
+                    asset.play();
+            } else if (soundMap.containsKey(audioID)) {
+                int loops = 0;
+                if (LOOP.equals(action)) {
+                    loops = -1;
+                }
 
-				int assetIntID = soundMap.get(audioID);
-				int streamID = soundPool
-						.play(assetIntID, 1, 1, 1, loops, 1);
-				streams.add(streamID);
-				streamMap.put(audioID, streams);
-			} else {
-				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
-			}
-		} catch (JSONException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		} catch (IOException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		}
-		
-		return new PluginResult(Status.OK);
-	}
+                ArrayList<Integer> streams = streamMap.get(audioID);
+                if (streams == null)
+                    streams = new ArrayList<Integer>();
 
-	private PluginResult executeStop(JSONArray data) {
-		String audioID;
-		try {
-			audioID = data.getString(0);
-			//Log.d( LOGTAG, "stop - " + audioID );
-			
-			if (assetMap.containsKey(audioID)) {
-				LowLatencyAudioAsset asset = assetMap.get(audioID);
-				asset.stop();
-			} else if (soundMap.containsKey(audioID)) {
-				ArrayList<Integer> streams = streamMap.get(audioID);
-				if (streams != null) {
-					for (int x = 0; x < streams.size(); x++)
-						soundPool.stop(streams.get(x));
-				}
-				streamMap.remove(audioID);
-			} else {
-				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
-			}			
-		} catch (JSONException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		} catch (IOException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		}
-		
-		return new PluginResult(Status.OK);
-	}
+                int assetIntID = soundMap.get(audioID);
+                int streamID = soundPool
+                        .play(assetIntID, 1, 1, 1, loops, 1);
+                streams.add(streamID);
+                streamMap.put(audioID, streams);
+            } else {
+                return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+            }
+        } catch (JSONException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        } catch (IOException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        }
 
-	private PluginResult executeUnload(JSONArray data) {
-		String audioID;
-		try {
-			audioID = data.getString(0);
-			Log.d( LOGTAG, "unload - " + audioID );
-			
-			if (assetMap.containsKey(audioID)) {
-				LowLatencyAudioAsset asset = assetMap.get(audioID);
-				asset.unload();
-				assetMap.remove(audioID);
-			} else if (soundMap.containsKey(audioID)) {
-				// streams unloaded and stopped above
-				int assetIntID = soundMap.get(audioID);
-				soundMap.remove(audioID);
-				soundPool.unload(assetIntID);
-			} else {
-				return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
-			}
-		} catch (JSONException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		} catch (IOException e) {
-			return new PluginResult(Status.ERROR, e.toString());
-		}
-		
-		return new PluginResult(Status.OK);
-	}
-	
-	@Override
-	public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
-		Log.d(LOGTAG, "Plugin Called: " + action);
-		
-		PluginResult result = null;
-		initSoundPool();
-		
-		try {
-			if (PRELOAD_FX.equals(action)) {
-				cordova.getThreadPool().execute(new Runnable() {
-		            public void run() {
-		            	callbackContext.sendPluginResult( executePreloadFX(data) );
-		            }
-		        });				
-				
-			} else if (PRELOAD_AUDIO.equals(action)) {
-				cordova.getThreadPool().execute(new Runnable() {
-		            public void run() {
-		            	callbackContext.sendPluginResult( executePreloadAudio(data) );
-		            }
-		        });				
+        return new PluginResult(Status.OK);
+    }
 
-			} else if (PLAY.equals(action) || LOOP.equals(action)) {
-				cordova.getThreadPool().execute(new Runnable() {
-		            public void run() {
-		            	callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
-		            }
-		        });				
-				
-			} else if (STOP.equals(action)) {
-				cordova.getThreadPool().execute(new Runnable() {
-		            public void run() {
-		            	callbackContext.sendPluginResult( executeStop(data) );
-		            }
-		        });				
-				
-			} else if (UNLOAD.equals(action)) {
-				cordova.getThreadPool().execute(new Runnable() {
-		            public void run() {
-		        		executeStop(data);
-						callbackContext.sendPluginResult( executeUnload(data) );
-		            }
-		        });
-			} else if (ASSETCHECK.equals(action)) {
-				cordova.getThreadPool().execute(new Runnable() {
-		            public void run() {
-						callbackContext.sendPluginResult( executeAssetCheck(data) );
-		            }
-		        });
+    private PluginResult executeStop(JSONArray data) {
+        String audioID;
+        try {
+            audioID = data.getString(0);
+            //Log.d( LOGTAG, "stop - " + audioID );
 
-			} else {
-				result = new PluginResult(Status.OK);
-			}
-		} catch (Exception ex) {
-			result = new PluginResult(Status.ERROR, ex.toString());
-		}
+            if (assetMap.containsKey(audioID)) {
+                LowLatencyAudioAsset asset = assetMap.get(audioID);
+                asset.stop();
+            } else if (soundMap.containsKey(audioID)) {
+                ArrayList<Integer> streams = streamMap.get(audioID);
+                if (streams != null) {
+                    for (int x = 0; x < streams.size(); x++)
+                        soundPool.stop(streams.get(x));
+                }
+                streamMap.remove(audioID);
+            } else {
+                return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+            }
+        } catch (JSONException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        } catch (IOException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        }
 
-		if(result != null) callbackContext.sendPluginResult( result );
-		return true;
-	}
+        return new PluginResult(Status.OK);
+    }
 
-	private void initSoundPool() {
-		if (soundPool == null) {
-			soundPool = new SoundPool(DEFAULT_POLYPHONY_VOICES,
-					AudioManager.STREAM_MUSIC, 1);
-		}
+    private PluginResult executeUnload(JSONArray data) {
+        String audioID;
+        try {
+            audioID = data.getString(0);
+            Log.d( LOGTAG, "unload - " + audioID );
 
-		if (soundMap == null) {
-			soundMap = new HashMap<String, Integer>();
-		}
+            if (assetMap.containsKey(audioID)) {
+                LowLatencyAudioAsset asset = assetMap.get(audioID);
+                asset.unload();
+                assetMap.remove(audioID);
+            } else if (soundMap.containsKey(audioID)) {
+                // streams unloaded and stopped above
+                int assetIntID = soundMap.get(audioID);
+                soundMap.remove(audioID);
+                soundPool.unload(assetIntID);
+            } else {
+                return new PluginResult(Status.ERROR, ERROR_NO_AUDIOID);
+            }
+        } catch (JSONException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        } catch (IOException e) {
+            return new PluginResult(Status.ERROR, e.toString());
+        }
 
-		if (streamMap == null) {
-			streamMap = new HashMap<String, ArrayList<Integer>>();
-		}
+        return new PluginResult(Status.OK);
+    }
 
-		if (assetMap == null) {
-			assetMap = new HashMap<String, LowLatencyAudioAsset>();
-		}
-	}
+    @Override
+    public boolean execute(final String action, final JSONArray data, final CallbackContext callbackContext) {
+        Log.d(LOGTAG, "Plugin Called: " + action);
+
+        PluginResult result = null;
+        initSoundPool();
+
+        try {
+            if (PRELOAD_FX.equals(action)) {
+                cordova.getThreadPool().execute(new Runnable() {
+                    public void run() {
+                        callbackContext.sendPluginResult( executePreloadFX(data) );
+                    }
+                });
+
+            } else if (PRELOAD_AUDIO.equals(action)) {
+                cordova.getThreadPool().execute(new Runnable() {
+                    public void run() {
+                        callbackContext.sendPluginResult( executePreloadAudio(data) );
+                    }
+                });
+
+            } else if (PLAY.equals(action) || LOOP.equals(action)) {
+                cordova.getThreadPool().execute(new Runnable() {
+                    public void run() {
+                        callbackContext.sendPluginResult( executePlayOrLoop(action, data) );
+                    }
+                });
+
+            } else if (STOP.equals(action)) {
+                cordova.getThreadPool().execute(new Runnable() {
+                    public void run() {
+                        callbackContext.sendPluginResult( executeStop(data) );
+                    }
+                });
+
+            } else if (UNLOAD.equals(action)) {
+                cordova.getThreadPool().execute(new Runnable() {
+                    public void run() {
+                        executeStop(data);
+                        callbackContext.sendPluginResult( executeUnload(data) );
+                    }
+                });
+            } else if (ASSETCHECK.equals(action)) {
+                cordova.getThreadPool().execute(new Runnable() {
+                    public void run() {
+                        callbackContext.sendPluginResult( executeAssetCheck(data) );
+                    }
+                });
+
+            } else {
+                result = new PluginResult(Status.OK);
+            }
+        } catch (Exception ex) {
+            result = new PluginResult(Status.ERROR, ex.toString());
+        }
+
+        if(result != null) callbackContext.sendPluginResult( result );
+        return true;
+    }
+
+    private void initSoundPool() {
+        if (soundPool == null) {
+            soundPool = new SoundPool(DEFAULT_POLYPHONY_VOICES,
+                    AudioManager.STREAM_MUSIC, 1);
+        }
+
+        if (soundMap == null) {
+            soundMap = new HashMap<String, Integer>();
+        }
+
+        if (streamMap == null) {
+            streamMap = new HashMap<String, ArrayList<Integer>>();
+        }
+
+        if (assetMap == null) {
+            assetMap = new HashMap<String, LowLatencyAudioAsset>();
+        }
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
