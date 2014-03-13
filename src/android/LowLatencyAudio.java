@@ -72,7 +72,7 @@ public class LowLatencyAudio extends CordovaPlugin {
 
     private PluginResult executeAssetCheck(JSONArray data) {
         try {
-            LowLatencyAudio.androidKey = data.getString(0);
+            LowLatencyDownloaderService.BASE64_PUBLIC_KEY = data.getString(0);
 
             Intent intent = new Intent("com.rjfun.cordova.plugin.LowLatencyAudio.VIEW");
             intent.addCategory(Intent.CATEGORY_DEFAULT);
