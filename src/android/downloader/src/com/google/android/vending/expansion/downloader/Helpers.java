@@ -206,6 +206,8 @@ public class Helpers {
      * @return String the file name of the expansion file
      */
     public static String getExpansionAPKFileName(Context c, boolean mainFile, int versionCode) {
+        Log.d("LowLatencyAudio", "Packet: " + c.getPackageName());
+
         return (mainFile ? "main." : "patch.") + versionCode + "." + c.getPackageName() + ".obb";
     }
 
