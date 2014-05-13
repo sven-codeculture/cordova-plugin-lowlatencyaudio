@@ -78,6 +78,7 @@ public class LowLatencyAudio extends CordovaPlugin {
             intent.addCategory(Intent.CATEGORY_DEFAULT);
 
             Log.d(LOGTAG, "Starting intend " + intent);
+            Log.d(LOGTAG, "Key is: " + LowLatencyDownloaderService.BASE64_PUBLIC_KEY);
 
             this.cordova.startActivityForResult((CordovaPlugin) this, intent, REQUEST_CODE);
             return new PluginResult(Status.OK);
